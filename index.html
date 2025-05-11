@@ -73,11 +73,11 @@
         .accordion-content {
             background-color: var(--primary-color);
             color: white;
-            padding: 20px;
+            padding: 20px; /* Padding geral */
             border-radius: 8px;
-            margin-bottom: 20px;
             transition: all 0.3s ease;
-            overflow: hidden;
+            overflow: hidden; /* Esconde conteúdo que transborda quando colapsado */
+            position: relative; /* Contexto para o dropdown em desktop */
         }
 
         .accordion-content.collapsed {
@@ -94,8 +94,55 @@
 
         .form-header-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: 1fr 1fr auto;
+            grid-template-rows: auto auto auto;
+            gap: 10px 15px;
+            align-items: end;
+        }
+
+        .form-header-content > .form-group {
+            grid-column: auto / auto;
+        }
+
+        .form-header-content > .form-group:nth-child(1) {
+            grid-column: 1 / 2;
+            grid-row: 1;
+        }
+        .form-header-content > .form-group:nth-child(2) {
+            grid-column: 2 / 3;
+            grid-row: 1;
+        }
+        .form-header-content > .form-group:nth-child(4) {
+            grid-column: 1 / 4;
+            grid-row: 2;
+        }
+        .form-header-content > .form-group:nth-child(3) {
+            grid-column: 1 / 2;
+            grid-row: 3;
+        }
+        .form-header-content > .form-group:nth-child(5) {
+            grid-column: 2 / 4;
+            grid-row: 3;
+        }
+
+        .form-header-content .whatsapp-input-group {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: flex-end !important;
+            gap: 10px !important;
+            width: 100%;
+        }
+
+        .form-header-content .whatsapp-input-group input#whatsapp {
+            flex-grow: 1;
+        }
+
+        .form-header-content .whatsapp-input-group .btn-whatsapp {
+            width: auto !important;
+            max-width: none !important;
+            align-self: flex-end !important;
+            margin-bottom: 0 !important;
+            flex-shrink: 0;
         }
 
         .form-section {
@@ -271,9 +318,61 @@
                 padding: 10px;
             }
 
+            .logo-container img {
+                max-width: 150px;
+            }
+
+            .top-action-buttons {
+                /* Em mobile, será o primeiro item no fluxo do headerContent */
+                /* Em desktop, será posicionado absolutamente */
+                margin-bottom: 15px; /* Espaçamento padrão, principalmente para mobile */
+            }
+            /* .dropdown-container e .dropbtn em mobile já estão configurados para width 100% */
+
+            .accordion-content#headerContent {
+                 /* Em mobile, não é grid, elementos fluem normalmente */
+            }
+            .top-action-buttons .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                justify-content: center;
+            }
+            .top-action-buttons .btn:last-child {
+                margin-bottom: 0;
+            }
+
+            .accordion-header h1 {
+                font-size: 1.3em;
+            }
+            .form-section h2 {
+                font-size: 1.3em;
+            }
+
+            .add-item-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .add-item-group .form-control {
+                margin-bottom: 8px;
+            }
+            .add-item-group .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .servico-item label,
+            .editable-label {
+                font-size: 1.1em;
+            }
+
+            .form-section,
+            .accordion-header,
+            .accordion-content {
+                margin-bottom: 15px;
+            }
+
             .checkbox-group {
                 flex-direction: column;
-                gap: 5px;
             }
 
             .button-group {
@@ -304,6 +403,159 @@
         .button-group-right .btn:last-child {
             margin-bottom: 0;
         }
+
+        .top-action-buttons {
+            /* Estilos gerais para o container do dropdown */
+            /* Em mobile, ele será o primeiro item no fluxo normal do headerContent */
+            margin-bottom: 15px; /* Espaçamento abaixo do dropdown antes dos campos, principalmente para mobile */
+        }
+
+        .add-item-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        /* Dropdown Button Styles */
+        .dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropbtn {
+            /* Herda estilos de .btn e .btn-primary */
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza texto e ícone */
+        }
+
+        .dropdown-caret {
+            margin-left: 8px;
+            font-size: 0.8em;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 200px; /* Ajuste conforme necessário */
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 100;
+            border-radius: 4px;
+        }
+
+        .dropdown-content a {
+            color: var(--primary-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: flex; /* Para alinhar ícone e texto */
+            align-items: center;
+            gap: 8px; /* Espaço entre ícone e texto */
+        }
+        .dropdown-content a svg {
+             fill: var(--primary-color);
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        /* Desktop-specific overrides */
+        @media (min-width: 769px) {
+            .accordion-content#headerContent:not(.collapsed) {
+                display: grid;
+                grid-template-columns: 1fr auto; /* Coluna flex para campos, Coluna auto para dropdown */
+                grid-template-rows: auto 1fr;    /* Linha auto para dropdown, Linha flex para campos */
+                gap: 0 20px; /* Sem gap de linha, gap de coluna entre campos e dropdown se estivessem lado a lado */
+                /* padding: 20px; Mantido do .accordion-content geral */
+            }
+
+            .accordion-content#headerContent:not(.collapsed) > .top-action-buttons {
+                position: absolute;
+                top: 10px; /* Reduzido de 20px para diminuir o espaço acima */
+                right: 20px; /* Mantido para alinhar com o padding lateral */
+                z-index: 10; /* Para sobrepor outros elementos se necessário */
+                margin-bottom: 0; /* Remove a margem que é para mobile */
+            }
+
+            .accordion-content#headerContent:not(.collapsed) > .form-header-content {
+                grid-column: 1 / 2;  /* Na primeira coluna (ocupa a largura menos o dropdown) */
+                grid-row: 1 / 3;     /* Ocupa ambas as linhas para se estender ao lado e abaixo do dropdown */
+                                     /* Se o dropdown for muito alto, isso pode precisar de ajuste, 
+                                        ou fazer o form-header-content ser 1 / span 2 na linha 2 */ 
+                /* Ajuste proposto: Colocar campos na linha 2 para clareza */
+                /* grid-column: 1 / 3; /* Ocupa toda a largura */
+                /* grid-row: 2 / 3;    /* Na segunda linha, abaixo do dropdown */
+            }
+            
+            /* REVISÃO PARA SIMPLIFICAR O GRID DE HEADERCONTENT EM DESKTOP */
+            .accordion-content#headerContent:not(.collapsed) {
+                position: relative; /* Para posicionamento absoluto do dropdown se necessário, ou apenas para contexto */
+                /* display: block; Resetar para block e usar posicionamento manual ou float para o dropdown */
+            }
+            .accordion-content#headerContent:not(.collapsed) > .top-action-buttons {
+               /* Posicionamento absoluto ou float aqui */
+               position: absolute; 
+               top: 10px; /* Reduzido de 20px */
+               right: 20px; /* Mantido em 20px para alinhar com padding do container */
+               z-index: 10; /* Para ficar sobre outros elementos se houver sobreposição */
+               margin-bottom: 0;
+            }
+            .accordion-content#headerContent:not(.collapsed) > .form-header-content {
+                /* Ocupa o espaço normal, o dropdown está "flutuando" sobre ele */
+                /* padding-right: valor_para_nao_sobrepor_dropdown; /* Se o dropdown for muito largo */
+                padding-right: 140px; /* Adicionado para evitar que o conteúdo dos campos fique sob o botão Ações */
+            }
+
+            .dropdown-container { /* Em desktop, o container do dropdown não ocupa 100% */
+                width: auto;
+            }
+            .dropbtn {
+                width: auto; /* Botão ocupa toda a largura em desktop */
+            }
+            .dropdown-content{
+                min-width: 100%; /* Conteúdo do dropdown também ocupa a largura */
+                left: 0; /* Alinha à esquerda do container */
+            }
+
+            .top-action-buttons .btn {
+                width: 100%;
+                margin-bottom: 10px;
+                justify-content: center;
+            }
+            .top-action-buttons .btn:last-child {
+                margin-bottom: 0;
+            }
+
+            .form-header-content .whatsapp-input-group {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: flex-end !important;
+                gap: 10px !important;
+                width: 100%;
+            }
+
+            .form-header-content .whatsapp-input-group input#whatsapp {
+                flex-grow: 1;
+            }
+
+            .form-header-content .whatsapp-input-group .btn-whatsapp {
+                width: auto !important;
+                max-width: none !important;
+                align-self: flex-end !important;
+                margin-bottom: 0 !important;
+                flex-shrink: 0;
+            }
+        }
+
+        #whatsappPreview {
+            display: none; /* Esconde o preview do link do WhatsApp */
+        }
     </style>
     <!-- jsPDF CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -312,27 +564,6 @@
     <div class="container">
         <div class="logo-container">
             <img src="https://www.sie.com.br/admin/_upload/2021/10/23/29155/665e0803ea26e.png" alt="Logo SIE" />
-        </div>
-        <div style="display: flex; gap: 10px; margin-bottom: 20px; align-items: center;">
-            <input type="file" id="fileInputTopo" accept=".json" style="display: none;" onchange="carregarJSON(event)">
-            <button class="btn btn-primary" onclick="document.getElementById('fileInputTopo').click()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
-                Carregar JSON
-            </button>
-            <button class="btn btn-primary" onclick="salvarJSON()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-                </svg>
-                Salvar JSON
-            </button>
-            <button class="btn btn-danger" onclick="reiniciarVazio()">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M5 13h14v-2H5v2zm7-12C6.48 1 1 6.48 1 13s5.48 12 12 12 12-5.48 12-12S17.52 1 12 1zm0 22c-5.52 0-10-4.48-10-10S6.48 3 12 3s10 4.48 10 10-4.48 10-10 10z"/>
-                </svg>
-                Reiniciar Vazio
-            </button>
         </div>
 
         <div class="accordion-header" onclick="toggleAccordion()">
@@ -343,6 +574,36 @@
         </div>
 
         <div class="accordion-content" id="headerContent">
+            <div class="top-action-buttons">
+                <input type="file" id="fileInputTopo" accept=".json" style="display: none;" onchange="carregarJSON(event)">
+                
+                <div class="dropdown-container">
+                    <button onclick="toggleActionsDropdown()" class="btn btn-primary dropbtn">
+                        Ações <span class="dropdown-caret">&#9662;</span>
+                    </button>
+                    <div id="actionsDropdown" class="dropdown-content">
+                        <a href="#" onclick="document.getElementById('fileInputTopo').click(); closeActionsDropdown(); return false;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                            </svg>
+                            Carregar JSON
+                        </a>
+                        <a href="#" onclick="salvarJSON(); closeActionsDropdown(); return false;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                            </svg>
+                            Salvar JSON
+                        </a>
+                        <a href="#" onclick="reiniciarVazio(); closeActionsDropdown(); return false;">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M5 13h14v-2H5v2zm7-12C6.48 1 1 6.48 1 13s5.48 12 12 12 12-5.48 12-12S17.52 1 12 1zm0 22c-5.52 0-10-4.48-10-10S6.48 3 12 3s10 4.48 10 10-4.48 10-10 10z"/>
+                            </svg>
+                            Reiniciar Vazio
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <div class="form-header-content">
                 <div class="form-group">
                     <label for="dataAtendimento">Data do atendimento:</label>
@@ -353,11 +614,15 @@
                     <input type="time" id="horario" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="responsavel">Responsável pelo atendimento:</label>
+                    <label for="responsavel">Acompanhamento</label>
                     <input type="text" id="responsavel" class="form-control" required>
                 </div>
                 <div class="form-group">
-                    <label for="whatsapp">Número do WhatsApp para contato:</label>
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="endereco" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="whatsapp">WhatsApp</label>
                     <div class="whatsapp-input-group" style="flex-direction:column;align-items:stretch;gap:8px;">
                         <input type="tel" id="whatsapp" class="form-control" placeholder="(00) 00000-0000" 
                                pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" required>
@@ -375,7 +640,7 @@
 
         <div class="form-section">
             <h2>Serviços a realizar</h2>
-            <div class="form-group" style="display:flex;gap:8px;align-items:center;">
+            <div class="form-group add-item-group" style="display:flex;gap:8px;align-items:center;">
                 <input type="text" id="novoServico" class="form-control" placeholder="Adicionar novo serviço...">
                 <button class="btn btn-primary" type="button" onclick="adicionarItem('servicos')">Adicionar</button>
                 <button class="btn btn-danger" type="button" style="padding:2px 10px;font-size:18px;background:none;color:#e74c3c;font-weight:bold;border:none;" onclick="confirmarRemoverTodos('servicos')" title="Excluir todos os serviços">X</button>
@@ -387,7 +652,7 @@
 
         <div class="form-section">
             <h2>Dúvidas a esclarecer</h2>
-            <div class="form-group" style="display:flex;gap:8px;align-items:center;">
+            <div class="form-group add-item-group" style="display:flex;gap:8px;align-items:center;">
                 <input type="text" id="novaDuvida" class="form-control" placeholder="Adicionar nova dúvida...">
                 <button class="btn btn-primary" type="button" onclick="adicionarItem('duvidas')">Adicionar</button>
                 <button class="btn btn-danger" type="button" style="padding:2px 10px;font-size:18px;background:none;color:#e74c3c;font-weight:bold;border:none;" onclick="confirmarRemoverTodos('duvidas')" title="Excluir todas as dúvidas">X</button>
@@ -399,7 +664,7 @@
 
         <div class="form-section">
             <h2 id="tituloLuzes" style="cursor:pointer;" onclick="editarTituloLuzes()">Luzes externas</h2>
-            <div class="form-group" style="display:flex;gap:8px;align-items:center;">
+            <div class="form-group add-item-group" style="display:flex;gap:8px;align-items:center;">
                 <input type="text" id="novaLuz" class="form-control" placeholder="Adicionar nova luz...">
                 <button class="btn btn-primary" type="button" onclick="adicionarItem('luzes')">Adicionar</button>
                 <button class="btn btn-danger" type="button" style="padding:2px 10px;font-size:18px;background:none;color:#e74c3c;font-weight:bold;border:none;" onclick="confirmarRemoverTodos('luzes')" title="Excluir todas as luzes">X</button>
@@ -411,7 +676,7 @@
 
         <div class="form-section">
             <h2>Outros</h2>
-            <div class="form-group" style="display:flex;gap:8px;align-items:center;">
+            <div class="form-group add-item-group" style="display:flex;gap:8px;align-items:center;">
                 <input type="text" id="novoOutro" class="form-control" placeholder="Adicionar novo item em Outros...">
                 <button class="btn btn-primary" type="button" onclick="adicionarItem('outros')">Adicionar</button>
                 <button class="btn btn-danger" type="button" style="padding:2px 10px;font-size:18px;background:none;color:#e74c3c;font-weight:bold;border:none;" onclick="confirmarRemoverTodos('outros')" title="Excluir todos os outros">X</button>
@@ -480,12 +745,18 @@
         // Variável para o título editável
         let tituloLuzes = 'Luzes externas';
 
+        // Labels editáveis para luzes
+        let luzesLabels = ['Lâmpada', 'Fiação', 'Outro'];
+
         // Exemplo padrão para cada seção
         const exemploServicos = ['Exemplo de serviço...'];
         const exemploDuvidas = ['Exemplo de dúvida...'];
         const exemploLuzes = ['Exemplo de luz...'];
         const exemploOutros = ['Exemplo de outro item...'];
-        const exemploLabelsLuzes = ['Lâmpada', 'Fiação', 'Outro'];
+
+        // Constantes para valores padrão (para maior clareza ao carregar e reiniciar)
+        const PADRAO_TITULO_LUZES = 'Luzes externas';
+        const PADRAO_LABELS_LUZES = Object.freeze(['Lâmpada', 'Fiação', 'Outro']);
 
         // Função para criar um item de serviço
         function criarItemServico(descricao, idx) {
@@ -681,11 +952,7 @@
             luzesContainer.innerHTML = '';
             outrosContainer.innerHTML = '';
 
-            // Atualizar data e hora inicial
-            atualizarDataHora();
-
-            // Configurar atualização automática da hora a cada minuto
-            setInterval(atualizarDataHora, 60000);
+            // NÃO chamar atualizarDataHora() ou setInterval() aqui
 
             servicos.forEach((servico, idx) => {
                 servicosContainer.appendChild(criarItemServico(servico, idx));
@@ -745,6 +1012,7 @@
                 dataAtendimento: document.getElementById('dataAtendimento').value,
                 horario: document.getElementById('horario').value,
                 responsavel: document.getElementById('responsavel').value,
+                endereco: document.getElementById('endereco').value,
                 whatsapp: document.getElementById('whatsapp').value,
                 observacoes: document.getElementById('observacoes').value,
                 servicos: {},
@@ -791,52 +1059,58 @@
 
         // Função para preencher o formulário com dados carregados
         function preencherFormulario(formData) {
-            // Preencher listas dinâmicas se existirem
-            if (formData.listaServicos) servicos = formData.listaServicos;
-            if (formData.listaDuvidas) duvidas = formData.listaDuvidas;
-            if (formData.listaLuzes) luzes = formData.listaLuzes;
-            if (formData.listaOutros) outros = formData.listaOutros;
-            if (formData.tituloLuzes) tituloLuzes = formData.tituloLuzes;
-            if (formData.luzesLabels) luzesLabels = formData.luzesLabels;
-            // Garantir pelo menos um exemplo
-            if (!servicos || servicos.length === 0) servicos = [...exemploServicos];
-            if (!duvidas || duvidas.length === 0) duvidas = [...exemploDuvidas];
-            if (!luzes || luzes.length === 0) luzes = [...exemploLuzes];
-            if (!outros || outros.length === 0) outros = [...exemploOutros];
-            // Preencher dados básicos
+            // 1. Atualizar as listas de itens e variáveis de personalização a partir do formData
+            servicos = (formData.listaServicos && formData.listaServicos.length > 0) ? [...formData.listaServicos] : [...exemploServicos];
+            duvidas =  (formData.listaDuvidas && formData.listaDuvidas.length > 0) ? [...formData.listaDuvidas] : [...exemploDuvidas];
+            luzes =    (formData.listaLuzes   && formData.listaLuzes.length > 0)   ? [...formData.listaLuzes]   : [...exemploLuzes];
+            outros =   (formData.listaOutros  && formData.listaOutros.length > 0)  ? [...formData.listaOutros]  : [...exemploOutros];
+
+            tituloLuzes = formData.tituloLuzes || PADRAO_TITULO_LUZES;
+            luzesLabels = (formData.luzesLabels && Array.isArray(formData.luzesLabels) && formData.luzesLabels.length === 3) 
+                            ? [...formData.luzesLabels] 
+                            : [...PADRAO_LABELS_LUZES];
+            
+            // 2. Preencher campos do cabeçalho (eles não dependem da estrutura dinâmica)
             document.getElementById('dataAtendimento').value = formData.dataAtendimento || '';
             document.getElementById('horario').value = formData.horario || '';
             document.getElementById('responsavel').value = formData.responsavel || '';
+            document.getElementById('endereco').value = formData.endereco || '';
             document.getElementById('whatsapp').value = formData.whatsapp || '';
             atualizarPreviewWhatsApp();
             document.getElementById('observacoes').value = formData.observacoes || '';
 
-            // Preencher serviços
-            Object.entries(formData.servicos || {}).forEach(([servico, status]) => {
-                const radio = document.querySelector(`input[name="status_${servico}"][value="${status}"]`);
-                if (radio) radio.checked = true;
-            });
-
-            // Preencher dúvidas
-            Object.entries(formData.duvidas || {}).forEach(([duvida, resposta]) => {
-                const textarea = document.querySelector(`textarea[placeholder="${duvida}"]`);
-                if (textarea) textarea.value = resposta;
-            });
-
-            // Preencher luzes
-            Object.entries(formData.luzes || {}).forEach(([luz, dados]) => {
-                if (dados.lampada) document.getElementById(`lampada_${luz}`).checked = true;
-                if (dados.fiacao) document.getElementById(`fiacao_${luz}`).checked = true;
-                if (dados.outro) document.getElementById(`outro_${luz}`).checked = true;
-            });
-
-            // Preencher outros
-            Object.entries(formData.outros || {}).forEach(([outro, status]) => {
-                const radio = document.querySelector(`input[name="status_${outro}"][value="${status}"]`);
-                if (radio) radio.checked = true;
-            });
-
+            // 3. Chamar inicializarFormulario() PARA CONSTRUIR O HTML dos itens dinâmicos
             inicializarFormulario();
+
+            // 4. AGORA, com o HTML dos itens já construído, preencher os valores (status, textareas, checkboxes)
+            if (formData.servicos) {
+                Object.entries(formData.servicos).forEach(([servicoNome, status]) => {
+                    const radio = document.querySelector(`input[name="status_${servicoNome}"][value="${status}"]`);
+                    if (radio) radio.checked = true;
+                });
+            }
+
+            if (formData.duvidas) {
+                Object.entries(formData.duvidas).forEach(([duvidaNome, resposta]) => {
+                    const textarea = document.querySelector(`textarea[placeholder="${duvidaNome}"]`);
+                    if (textarea) textarea.value = resposta;
+                });
+            }
+
+            if (formData.luzes) {
+                Object.entries(formData.luzes).forEach(([luzNome, dados]) => {
+                    if (dados.lampada && document.getElementById(`lampada_${luzNome}`)) document.getElementById(`lampada_${luzNome}`).checked = true;
+                    if (dados.fiacao && document.getElementById(`fiacao_${luzNome}`)) document.getElementById(`fiacao_${luzNome}`).checked = true;
+                    if (dados.outro && document.getElementById(`outro_${luzNome}`)) document.getElementById(`outro_${luzNome}`).checked = true;
+                });
+            }
+
+            if (formData.outros) {
+                Object.entries(formData.outros).forEach(([outroNome, status]) => {
+                    const radio = document.querySelector(`input[name="status_${outroNome}"][value="${status}"]`);
+                    if (radio) radio.checked = true;
+                });
+            }
         }
 
         // Função para salvar o formulário
@@ -848,64 +1122,329 @@
 
         // Função para exportar PDF
         function exportarPDF() {
-            const formData = coletarDadosFormulario();
-            const doc = new window.jspdf.jsPDF();
-            let y = 15;
-            doc.setFontSize(16);
-            doc.text('Formulário de Acompanhamento - Serviços', 10, y);
-            y += 10;
-            doc.setFontSize(12);
-            doc.text(`Data do atendimento: ${formData.dataAtendimento || ''}`, 10, y);
-            y += 7;
-            doc.text(`Horário: ${formData.horario || ''}`, 10, y);
-            y += 7;
-            doc.text(`Responsável: ${formData.responsavel || ''}`, 10, y);
-            y += 7;
-            doc.text(`WhatsApp: ${formData.whatsapp || ''}`, 10, y);
-            y += 10;
-            doc.setFontSize(14);
-            doc.text('Serviços a realizar:', 10, y);
-            y += 8;
-            doc.setFontSize(12);
-            Object.entries(formData.servicos).forEach(([serv, status]) => {
-                doc.text(`- ${serv}: ${status || ''}`, 12, y);
-                y += 6;
-            });
-            y += 4;
-            doc.setFontSize(14);
-            doc.text('Dúvidas a esclarecer:', 10, y);
-            y += 8;
-            doc.setFontSize(12);
-            Object.entries(formData.duvidas).forEach(([duv, resp]) => {
-                doc.text(`- ${duv}: ${resp || ''}`, 12, y);
-                y += 6;
-            });
-            y += 4;
-            doc.setFontSize(14);
-            doc.text('Luzes externas:', 10, y);
-            y += 8;
-            doc.setFontSize(12);
-            Object.entries(formData.luzes).forEach(([luz, obj]) => {
-                doc.text(`- ${luz}: Lâmpada: ${obj.lampada ? 'Sim' : 'Não'}, Fiação: ${obj.fiacao ? 'Sim' : 'Não'}, Outro: ${obj.outro ? 'Sim' : 'Não'}`, 12, y);
-                y += 6;
-            });
-            y += 4;
-            doc.setFontSize(14);
-            doc.text('Outros:', 10, y);
-            y += 8;
-            doc.setFontSize(12);
-            Object.entries(formData.outros).forEach(([outro, status]) => {
-                doc.text(`- ${outro}: ${status || ''}`, 12, y);
-                y += 6;
-            });
-            y += 8;
-            doc.setFontSize(14);
-            doc.text('Observações gerais:', 10, y);
-            y += 8;
-            doc.setFontSize(12);
-            doc.text(formData.observacoes || '', 12, y);
-            // Salvar PDF
-            doc.save('formulario_servicos.pdf');
+            try {
+                const { jsPDF } = window.jspdf;
+                const formData = coletarDadosFormulario();
+                const doc = new jsPDF();
+
+                const margin = 18;
+                let y = margin;
+                const pageWidth = doc.internal.pageSize.getWidth() - (margin * 2);
+                const pageHeight = doc.internal.pageSize.getHeight();
+                const usablePageHeight = pageHeight - margin; 
+
+                const menuFontSize = 9;
+                const menuSeparator = "  |  ";
+
+                function drawHorizontalMenu(docInstance, targetY, onPageNum) {
+                    docInstance.setFontSize(menuFontSize);
+                    docInstance.setFont('helvetica', 'normal');
+                    docInstance.setTextColor(0, 0, 255); // Cor de link azul
+
+                    let luzesMenuText = formData.tituloLuzes || PADRAO_TITULO_LUZES;
+                    if (docInstance.getTextWidth(luzesMenuText) > pageWidth / 4) { // Heurística de largura para "Luzes"
+                        luzesMenuText = "Luzes";
+                    }
+
+                    const menuConfig = [
+                        { text: "Dados Gerais", page: 1 },
+                        { text: "Serviços", page: 1 },
+                        { text: "Dúvidas", page: 2 },
+                        { text: luzesMenuText, page: 3 },
+                        { text: "Outros", page: 4 },
+                        { text: "Observações", page: 5 }
+                    ];
+
+                    let currentX = margin;
+                    let totalTextWidth = 0;
+                    const itemWidths = [];
+                    const separatorWidth = docInstance.getTextWidth(menuSeparator);
+
+                    menuConfig.forEach((item, index) => {
+                        const textWidth = docInstance.getTextWidth(item.text);
+                        itemWidths.push(textWidth);
+                        totalTextWidth += textWidth;
+                        if (index < menuConfig.length - 1) {
+                            totalTextWidth += separatorWidth;
+                        }
+                    });
+
+                    currentX = (docInstance.internal.pageSize.getWidth() - totalTextWidth) / 2; // Centralizar
+                    
+                    docInstance.setPage(onPageNum); // Assegurar que estamos desenhando na página correta
+
+                    menuConfig.forEach((item, index) => {
+                        docInstance.textWithLink(item.text, currentX, targetY, { pageNumber: item.page });
+                        currentX += itemWidths[index];
+
+                        if (index < menuConfig.length - 1) {
+                            docInstance.text(menuSeparator, currentX, targetY);
+                            currentX += separatorWidth;
+                        }
+                    });
+                    docInstance.setTextColor(0,0,0); // Resetar cor do texto para preto
+                }
+
+                function checkPageBreak(requiredHeight = 0) {
+                    if (y + requiredHeight > usablePageHeight && y > margin +1 ) {
+                        doc.addPage();
+                        y = margin; 
+                        return true; 
+                    }
+                    return false;
+                }
+
+                function addTitle(text, fontSize, style, spaceBefore, spaceAfter) {
+                    y += spaceBefore;
+                    doc.setFontSize(fontSize);
+                    doc.setFont('helvetica', style);
+                    const textWidth = doc.getTextWidth(text);
+                    const textX = (doc.internal.pageSize.getWidth() - textWidth) / 2; 
+                    doc.text(text, textX, y);
+                    y += spaceAfter; 
+                }
+
+                function addSectionHeader(text, spaceBefore, spaceAfter) {
+                    y += spaceBefore; 
+                    doc.setFontSize(13);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(text, margin, y);
+                    y += spaceAfter; 
+                    doc.setFontSize(11);
+                    doc.setFont('helvetica', 'normal');
+                }
+
+                function addItemText(fullText, indent, makeValueItalic = false, makeValueGray = false, makeEntireTextGray = false) {
+                    const blackColor = '#000000';
+                    const darkGrayColor = '#4A4A4A';
+                    const itemLineHeight = 7;
+                    const interItemSpaceTotal = (!makeEntireTextGray || indent !== 0) ? 2 : 0;
+
+                    const lines = doc.splitTextToSize(fullText, pageWidth - indent);
+                    
+                    lines.forEach(line => {
+                        checkPageBreak(itemLineHeight);
+                        
+                        if (makeEntireTextGray) {
+                            doc.setFont('helvetica', 'normal');
+                            doc.setTextColor(darkGrayColor);
+                            doc.text(line, margin + indent, y);
+                        } else {
+                            const separator = ': ';
+                            const separatorIndex = line.lastIndexOf(separator);
+
+                            if (separatorIndex !== -1 && (makeValueGray || makeValueItalic)) {
+                                const prefixText = line.substring(0, separatorIndex + separator.length);
+                                const valueText = line.substring(separatorIndex + separator.length);
+
+                                doc.setFont('helvetica', 'normal');
+                                doc.setTextColor(blackColor);
+                                doc.text(prefixText, margin + indent, y);
+                                const prefixWidth = doc.getTextWidth(prefixText);
+
+                                doc.setFont('helvetica', makeValueItalic ? 'italic' : 'normal');
+                                doc.setTextColor(makeValueGray ? darkGrayColor : blackColor);
+                                doc.text(valueText, margin + indent + prefixWidth, y);
+                            } else if (separatorIndex === -1 && (makeValueGray || makeValueItalic)) {
+                                doc.setFont('helvetica', makeValueItalic ? 'italic' : 'normal');
+                                doc.setTextColor(makeValueGray ? darkGrayColor : blackColor);
+                                doc.text(line, margin + indent, y);
+                            } else {
+                                doc.setFont('helvetica', 'normal');
+                                doc.setTextColor(blackColor);
+                                doc.text(line, margin + indent, y);
+                            }
+                        }
+                        y += itemLineHeight; 
+                    });
+
+                    if (interItemSpaceTotal > 0) {
+                         y += interItemSpaceTotal; 
+                    }
+                    doc.setTextColor(blackColor); 
+                    doc.setFont('helvetica', 'normal'); 
+                }
+
+                const logoUrl = 'https://www.sie.com.br/admin/_upload/2021/10/23/29155/665e0803ea26e.png';
+                const img = new Image();
+                img.crossOrigin = 'Anonymous';
+
+                img.onload = function() {
+                    try {
+                        // --- PÁGINA 1 --- 
+                        const aspectRatio = img.width / img.height;
+                        const logoWidth = pageWidth * 0.0875; 
+                        const logoHeight = logoWidth / aspectRatio; 
+                        doc.addImage(img, 'PNG', margin, margin, logoWidth, logoHeight);
+
+                        const mainTitleText = 'Formulário de Acompanhamento - Serviços';
+                        const titleFontSize = 14;
+                        const ptToMm = 25.4 / 72; 
+                        doc.setFontSize(titleFontSize);
+                        doc.setFont('helvetica', 'bold');
+                        const titleX = margin + logoWidth + 10; 
+                        const titleMaxWidth = doc.internal.pageSize.getWidth() - titleX - margin; 
+                        const titleLines = doc.splitTextToSize(mainTitleText, titleMaxWidth);
+                        if (titleLines.length > 0) {
+                            const logoCenterY_mm = margin + logoHeight / 2;
+                            const titleLineHeightMm = (titleFontSize * 1.15) * ptToMm;
+                            const titleBlockHeightMm = titleLines.length * titleLineHeightMm;
+                            const topOfTitleBlockMm = logoCenterY_mm - (titleBlockHeightMm / 2);
+                            let titleCurrentBaselineY_mm = topOfTitleBlockMm + (titleFontSize * 0.8 * ptToMm); 
+                            for (const line of titleLines) {
+                                doc.text(line, titleX, titleCurrentBaselineY_mm);
+                                titleCurrentBaselineY_mm += titleLineHeightMm;
+                            }
+                            const titleBlockBottomEdgeMm = topOfTitleBlockMm + titleBlockHeightMm;
+                            y = Math.max(margin + logoHeight, titleBlockBottomEdgeMm) + 15; 
+                        } else {
+                            y = margin + logoHeight + 15;
+                        }
+
+                        // --- MENU HORIZONTAL TOPO PÁGINA 1 ---
+                        const yMenuP1 = y; // y está posicionado após o título
+                        drawHorizontalMenu(doc, yMenuP1, 1);
+                        y = yMenuP1 + menuFontSize + 5; // Atualizar y para o conteúdo abaixo do menu
+                        // --- FIM MENU HORIZONTAL TOPO PÁGINA 1 ---
+
+                        // O spaceBefore do primeiro addSectionHeader (Dados Gerais) é 0, pois y já está posicionado após o menu horizontal.
+                        addSectionHeader('Dados Gerais', 0, 10); 
+                        addItemText(`Data do atendimento: ${formData.dataAtendimento || ''}`, 0, false, true, false);
+                        addItemText(`Horário: ${formData.horario || ''}`, 0, false, true, false);
+                        addItemText(`Endereço: ${formData.endereco || ''}`, 0, false, true, false); 
+                        addItemText(`Responsável: ${formData.responsavel || ''}`, 0, false, true, false);
+                        addItemText(`WhatsApp: ${formData.whatsapp || ''}`, 0, false, true, false);
+
+                        addSectionHeader('Serviços a realizar', 12, 10); 
+                        Object.entries(formData.servicos || {}).forEach(([serv, status]) => {
+                            addItemText(`- ${serv}: ${status || 'Pendente'}`, 5, true, true, false);
+                        });
+
+                        // --- PÁGINA 2: Dúvidas --- 
+                        doc.addPage();
+                        y = margin;
+                        drawHorizontalMenu(doc, y, 2); // Desenha menu no topo da Pág 2
+                        y += menuFontSize + 5; // Ajusta y para conteúdo abaixo do menu
+                        addSectionHeader('Dúvidas a esclarecer', 10, 10); 
+                        Object.entries(formData.duvidas || {}).forEach(([duv, resp]) => {
+                            addItemText(`- ${duv}: ${resp || ''}`, 5, false, true, false);
+                        });
+
+                        // --- PÁGINA 3: Luzes --- 
+                        doc.addPage();
+                        y = margin; 
+                        drawHorizontalMenu(doc, y, 3); // Desenha menu no topo da Pág 3
+                        y += menuFontSize + 5; // Ajusta y
+                        addSectionHeader((formData.tituloLuzes || PADRAO_TITULO_LUZES), 10, 10); 
+                        Object.entries(formData.luzes || {}).forEach(([luzDesc, statusObj]) => {
+                            const currentLabels = formData.luzesLabels || PADRAO_LABELS_LUZES;
+                            addItemText(`- ${luzDesc}:`, 5, false, false, false);
+
+                            const luzSubItems = [
+                                { label: currentLabels[0], statusKey: 'lampada' },
+                                { label: currentLabels[1], statusKey: 'fiacao' },
+                                { label: currentLabels[2], statusKey: 'outro' }
+                            ];
+
+                            luzSubItems.forEach(item => {
+                                const valorText = statusObj[item.statusKey] ? 'Sim' : 'Não';
+                                const fullLineText = `${item.label}: ${valorText}`;
+                                addItemText(fullLineText, 10, true, true, false); 
+                            });
+                            
+                            y += 4; 
+                        });
+
+                        // --- PÁGINA 4: Outros --- 
+                        doc.addPage();
+                        y = margin;
+                        drawHorizontalMenu(doc, y, 4); // Desenha menu no topo da Pág 4
+                        y += menuFontSize + 5; // Ajusta y
+                        addSectionHeader('Outros', 10, 10); 
+                        Object.entries(formData.outros || {}).forEach(([outro, status]) => {
+                            addItemText(`- ${outro}: ${status || 'Pendente'}`, 5, true, true, false);
+                        });
+
+                        // --- PÁGINA 5: Observações --- 
+                        doc.addPage();
+                        y = margin;
+                        drawHorizontalMenu(doc, y, 5); // Desenha menu no topo da Pág 5
+                        y += menuFontSize + 5; // Ajusta y
+                        addSectionHeader('Observações gerais', 10, 10); 
+                        addItemText(formData.observacoes || 'Nenhuma observação.', 0, false, false, true);
+
+                        // --- ADICIONAR APENAS COPYRIGHT NOS RODAPÉS ANTES DE SALVAR ---
+                        const totalPages = doc.internal.getNumberOfPages();
+                        const copyrightText = "© 2025 - Freenatwork Solutions | FNW Digital | Alex Sobral. Todos os direitos reservados";
+                        const copyrightFontSize = 8;
+                        const copyrightColor = '#888888'; // Cinza claro
+                        const copyrightMarginBottom = margin; // Posicionar na base da margem inferior
+
+                        for (let i = 2; i <= totalPages; i++) { 
+                            doc.setPage(i); // Certificar que estamos na página correta
+
+                            // Adicionar copyright
+                            doc.setFontSize(copyrightFontSize);
+                            doc.setTextColor(copyrightColor);
+                            const copyrightYpos = pageHeight - copyrightMarginBottom + (copyrightFontSize * 0.35); // Ajuste fino para alinhar base da fonte
+
+                            // Centralizar copyright em todas as páginas aplicáveis (2 em diante)
+                            const textWidth = doc.getTextWidth(copyrightText);
+                            const copyrightXpos = (doc.internal.pageSize.getWidth() - textWidth) / 2; // Centralizar na página
+                            doc.text(copyrightText, copyrightXpos, copyrightYpos);
+                            
+                            doc.setTextColor(0,0,0); // Resetar cor do texto para preto para outras operações
+                        }
+                        // --- FIM RODAPÉS ---
+
+                        doc.save('formulario_servicos.pdf');
+
+                    } catch (pdfError) {
+                        console.error('Erro ao gerar o conteúdo do PDF:', pdfError);
+                        alert('Ocorreu um erro ao gerar o conteúdo do PDF.');
+                    }
+                };
+
+                img.onerror = function() {
+                    console.error('Erro ao carregar a imagem da logo.');
+                    alert('Não foi possível carregar a logo. O PDF será gerado com erros de layout ou sem a logo.');
+                    // Fallback muito simplificado para evitar erros complexos aqui
+                    try {
+                        y = margin;
+                        addTitle('Formulário de Acompanhamento - Serviços', 14, 'bold', 10, 15);
+                        doc.text('ERRO: A logo não pôde ser carregada.', margin, y); y+= 10;
+                        doc.text('Continuando com os dados...', margin, y); y+=10;
+
+                        // Tentar renderizar o conteúdo de forma simplificada, sem a estrutura de paginação original
+                        addSectionHeader('Dados Gerais', 0, 10); 
+                        addItemText(`Data: ${formData.dataAtendimento || ''}`, 0, false, true, false);
+                        addSectionHeader('Serviços', 12, 10);
+                        Object.keys(formData.servicos || {}).forEach(k => addItemText(k,0));
+                        addSectionHeader('Dúvidas', 12, 10);
+                        Object.keys(formData.duvidas || {}).forEach(k => addItemText(k,0));
+                        
+                        // Adicionar nova página manualmente aqui se quiser separar o resto
+                        doc.addPage(); y = margin;
+                        addSectionHeader('Luzes', 10,10);
+                        Object.keys(formData.luzes || {}).forEach(k => addItemText(k,0));
+                        addSectionHeader('Outros', 12,10);
+                        Object.keys(formData.outros || {}).forEach(k => addItemText(k,0));
+                        addSectionHeader('Observações',12,10);
+                        addItemText(formData.observacoes || '',0,false,false,true);
+
+                        doc.save('formulario_servicos_fallback.pdf');
+                    } catch (fallbackError) {
+                        console.error('Erro ao gerar PDF de fallback:', fallbackError);
+                        alert('Ocorreu um erro crítico ao tentar gerar o PDF de fallback.');
+                    }
+                };
+
+                img.src = logoUrl;
+
+            } catch (initError) {
+                console.error('Erro ao inicializar o jsPDF ou coletar dados:', initError);
+                alert('Ocorreu um erro ao preparar a exportação para PDF.');
+            }
         }
 
         // Função para carregar do localStorage ao iniciar
@@ -914,14 +1453,10 @@
             if (savedData) {
                 try {
                     const formData = JSON.parse(savedData);
-                    // Não sobrescrever data e hora ao carregar
-                    const dataAtual = document.getElementById('dataAtendimento').value;
-                    const horaAtual = document.getElementById('horario').value;
                     preencherFormulario(formData);
-                    document.getElementById('dataAtendimento').value = dataAtual;
-                    document.getElementById('horario').value = horaAtual;
                 } catch (error) {
                     console.error('Erro ao carregar dados do localStorage:', error);
+                    alert('Erro ao carregar dados do localStorage. O formulário pode não ter sido carregado corretamente.');
                 }
             }
         }
@@ -962,7 +1497,8 @@
                 const mensagem = `Formulário de Serviços\n\n` +
                     `Data: ${formData.dataAtendimento}\n` +
                     `Horário: ${formData.horario}\n` +
-                    `Responsável: ${formData.responsavel}\n\n` +
+                    `Responsável: ${formData.responsavel}\n` +
+                    `Endereço: ${formData.endereco}\n\n` +
                     `Observações: ${formData.observacoes}`;
                 
                 const url = `https://wa.me/55${numeroLimpo}?text=${encodeURIComponent(mensagem)}`;
@@ -1113,51 +1649,22 @@
                 duvidas = [...exemploDuvidas];
                 luzes = [...exemploLuzes];
                 outros = [...exemploOutros];
-                luzesLabels = [...exemploLabelsLuzes];
-                tituloLuzes = 'Luzes externas';
+                // Usar as constantes padrão ao reiniciar
+                tituloLuzes = PADRAO_TITULO_LUZES;
+                luzesLabels = [...PADRAO_LABELS_LUZES];
+                
                 document.getElementById('dataAtendimento').value = '';
                 document.getElementById('horario').value = '';
                 document.getElementById('responsavel').value = '';
+                document.getElementById('endereco').value = '';
                 document.getElementById('whatsapp').value = '';
                 document.getElementById('observacoes').value = '';
                 inicializarFormulario();
             }
         }
 
-        // Labels editáveis para luzes
-        let luzesLabels = [...exemploLabelsLuzes];
-
-        function criarItemLuz(descricao, idx) {
-            const div = document.createElement('div');
-            div.className = 'form-group servico-item';
-            div.setAttribute('draggable', 'true');
-            div.setAttribute('ondragstart', `dragStart(event, 'luzes', ${idx})`);
-            div.setAttribute('ondragover', 'dragOver(event)');
-            div.setAttribute('ondrop', `dropItem(event, 'luzes', ${idx})`);
-            div.innerHTML = `
-                <div style="display:flex;align-items:center;justify-content:space-between;">
-                    <span class="editable-label" onclick="editarItem(this, 'luzes', ${idx})">${descricao}</span>
-                    <div>
-                        <button type="button" class="btn btn-danger" style="padding:2px 10px;font-size:18px;background:none;color:#e74c3c;font-weight:bold;border:none;" onclick="confirmarRemoverItem('luzes', ${idx})">X</button>
-                    </div>
-                </div>
-                <div class=\"checkbox-group\">
-                    <div class=\"checkbox-item\">
-                        <input type=\"checkbox\" id=\"lampada_${descricao}\">
-                        <span class=\"editable-checkbox-label\" onclick=\"editarLabelLuz(this,0)\">${luzesLabels[0]}</span>
-                    </div>
-                    <div class=\"checkbox-item\">
-                        <input type=\"checkbox\" id=\"fiacao_${descricao}\">
-                        <span class=\"editable-checkbox-label\" onclick=\"editarLabelLuz(this,1)\">${luzesLabels[1]}</span>
-                    </div>
-                    <div class=\"checkbox-item\">
-                        <input type=\"checkbox\" id=\"outro_${descricao}\">
-                        <span class=\"editable-checkbox-label\" onclick=\"editarLabelLuz(this,2)\">${luzesLabels[2]}</span>
-                    </div>
-                </div>
-            `;
-            return div;
-        }
+        // Labels editáveis para luzes - removida a inicialização aqui, pois já é feita no topo.
+        // let luzesLabels = [...exemploLabelsLuzes]; 
 
         function editarLabelLuz(span, idx) {
             const valorAtual = span.textContent;
@@ -1174,48 +1681,46 @@
             input.focus();
         }
         function salvarLabelLuz(input, idx) {
-            luzesLabels[idx] = input.value.trim() || exemploLabelsLuzes[idx];
+            luzesLabels[idx] = input.value.trim() || PADRAO_LABELS_LUZES[idx]; // Recorrer ao padrão se deixar em branco
             inicializarFormulario();
-        }
-
-        // Atualizar inicialização para exibir o título editável
-        function inicializarFormulario() {
-            const servicosContainer = document.getElementById('servicosContainer');
-            const duvidasContainer = document.getElementById('duvidasContainer');
-            const luzesContainer = document.getElementById('luzesContainer');
-            const outrosContainer = document.getElementById('outrosContainer');
-            // Limpar containers
-            servicosContainer.innerHTML = '';
-            duvidasContainer.innerHTML = '';
-            luzesContainer.innerHTML = '';
-            outrosContainer.innerHTML = '';
-            // Atualizar título da seção Luzes externas
-            const h2 = document.getElementById('tituloLuzes');
-            if (h2) h2.textContent = tituloLuzes;
-            // Atualizar data e hora inicial
-            atualizarDataHora();
-            // Configurar atualização automática da hora a cada minuto
-            setInterval(atualizarDataHora, 60000);
-            servicos.forEach((servico, idx) => {
-                servicosContainer.appendChild(criarItemServico(servico, idx));
-            });
-            duvidas.forEach((duvida, idx) => {
-                duvidasContainer.appendChild(criarItemDuvida(duvida, idx));
-            });
-            luzes.forEach((luz, idx) => {
-                luzesContainer.appendChild(criarItemLuz(luz, idx));
-            });
-            outros.forEach((outro, idx) => {
-                outrosContainer.appendChild(criarItemOutros(outro, idx));
-            });
         }
 
         // Atualizar a inicialização
         window.onload = function() {
-            inicializarFormulario();
-            carregarDoLocalStorage();
-            atualizarPreviewWhatsApp();
+            // 1. Atualizar data e hora uma vez e configurar o intervalo
+            atualizarDataHora(); 
+            setInterval(atualizarDataHora, 60000);
+
+            // 2. Inicializar a estrutura do formulário (listas de itens)
+            inicializarFormulario(); 
+
+            // 3. Carregar dados do localStorage, se houver
+            carregarDoLocalStorage(); 
+
+            // 4. Atualizar o preview do WhatsApp com base no que foi carregado ou está nos campos
+            atualizarPreviewWhatsApp(); 
         };
+
+        function toggleActionsDropdown() {
+            document.getElementById("actionsDropdown").classList.toggle("show");
+        }
+
+        function closeActionsDropdown() {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+
+        // Fecha o dropdown se clicar fora dele
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn') && !event.target.closest('.dropbtn')) { // Modificado para incluir elementos dentro do dropbtn (como o span e svg)
+                closeActionsDropdown();
+            }
+        }
     </script>
 </body>
 </html> 
