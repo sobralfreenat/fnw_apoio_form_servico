@@ -6,12 +6,12 @@
     <title>Formulário de Acompanhamento - Serviços</title>
     <style>
         :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --success-color: #2ecc71;
+            --primary-color: #576361;
+            --secondary-color: #2e3124;
+            --success-color: #056576;
             --warning-color: #f1c40f;
             --danger-color: #e74c3c;
-            --light-bg: #f8f9fa;
+            --light-bg: #e3f1f2;
         }
 
         * {
@@ -94,35 +94,35 @@
 
         .form-header-content {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr; /* Alterado para 3 colunas de largura igual */
-            grid-template-rows: auto auto;    /* Alterado para 2 linhas */
+            grid-template-columns: 1fr 1fr auto;
+            grid-template-rows: auto auto auto;
             gap: 10px 15px;
             align-items: end;
         }
 
         .form-header-content > .form-group {
-            grid-column: auto / auto; /* Reset/default */
+            grid-column: auto / auto;
         }
 
-        .form-header-content > .form-group:nth-child(1) { /* Data */
+        .form-header-content > .form-group:nth-child(1) {
             grid-column: 1 / 2;
             grid-row: 1;
         }
-        .form-header-content > .form-group:nth-child(2) { /* Horário */
+        .form-header-content > .form-group:nth-child(2) {
             grid-column: 2 / 3;
             grid-row: 1;
         }
-        .form-header-content > .form-group:nth-child(3) { /* Acompanhamento - movido para Linha 1, Coluna 3 */
-            grid-column: 3 / 4;
-            grid-row: 1;
-        }
-        .form-header-content > .form-group:nth-child(4) { /* Endereço - movido para Linha 2, Colunas 1-2 */
-            grid-column: 1 / 3; 
+        .form-header-content > .form-group:nth-child(4) {
+            grid-column: 1 / 4;
             grid-row: 2;
         }
-        .form-header-content > .form-group:nth-child(5) { /* WhatsApp - movido para Linha 2, Coluna 3 */
-            grid-column: 3 / 4;
-            grid-row: 2;
+        .form-header-content > .form-group:nth-child(3) {
+            grid-column: 1 / 2;
+            grid-row: 3;
+        }
+        .form-header-content > .form-group:nth-child(5) {
+            grid-column: 2 / 4;
+            grid-row: 3;
         }
 
         .form-header-content .whatsapp-input-group {
@@ -313,7 +313,7 @@
             color: #3498db;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 600px) {
             .container {
                 padding: 10px;
             }
@@ -325,17 +325,19 @@
             .top-action-buttons {
                 /* Em mobile, será o primeiro item no fluxo do headerContent */
                 /* Em desktop, será posicionado absolutamente */
-                margin-bottom: 15px; /* Espaçamento padrão, principalmente para mobile */
+                margin-bottom: 20px; /* Espaçamento padrão, principalmente para mobile */
+                display: flex; /* Adicionado para mobile */
+                justify-content: flex-end; /* Adicionado para alinhar o botão à direita em mobile */
             }
             /* .dropdown-container e .dropbtn em mobile já estão configurados para width 100% */
 
             .accordion-content#headerContent {
                  /* Em mobile, não é grid, elementos fluem normalmente */
             }
-            .top-action-buttons .btn {
-                width: 100%;
-                margin-bottom: 10px;
-                justify-content: center;
+            .top-action-buttons .btn { /* Esta regra se aplica ao .dropbtn em mobile */
+                width: auto; /* Alterado de 100% para auto em mobile */
+                margin-bottom: 0; /* Removido o margin-bottom que era para botões empilhados */
+                /* justify-content: center; Removido, não mais necessário com width:auto e flex-end no pai */
             }
             .top-action-buttons .btn:last-child {
                 margin-bottom: 0;
@@ -390,9 +392,10 @@
                 justify-content: center;
             }
 
-            .form-header-content {
+            /* Removida a regra que alterava o grid-template-columns para 1fr no mobile */
+            /* .form-header-content {
                 grid-template-columns: 1fr;
-            }
+            } */
         }
 
         .button-group-left .btn,
@@ -466,7 +469,7 @@
         }
 
         /* Desktop-specific overrides */
-        @media (min-width: 769px) {
+        @media (min-width: 601px) {
             .accordion-content#headerContent:not(.collapsed) {
                 display: grid;
                 grid-template-columns: 1fr auto; /* Coluna flex para campos, Coluna auto para dropdown */
@@ -478,7 +481,7 @@
             .accordion-content#headerContent:not(.collapsed) > .top-action-buttons {
                 position: absolute;
                 top: 10px; /* Reduzido de 20px para diminuir o espaço acima */
-                right: 20px; /* Mantido para alinhar com o padding lateral */
+                right: 35px; /* Aumentado de 20px para criar mais espaço à direita */
                 z-index: 10; /* Para sobrepor outros elementos se necessário */
                 margin-bottom: 0; /* Remove a margem que é para mobile */
             }
@@ -502,7 +505,7 @@
                /* Posicionamento absoluto ou float aqui */
                position: absolute; 
                top: 10px; /* Reduzido de 20px */
-               right: 20px; /* Mantido em 20px para alinhar com padding do container */
+               right: 35px; /* Aumentado de 20px para criar mais espaço à direita */
                z-index: 10; /* Para ficar sobre outros elementos se houver sobreposição */
                margin-bottom: 0;
             }
@@ -567,7 +570,7 @@
         </div>
 
         <div class="accordion-header" onclick="toggleAccordion()">
-            <h1>Formulário de Acompanhamento - Serviços</h1>
+            <h1>Acompanhamento - Demandas</h1>
             <svg class="accordion-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M7 10l5 5 5-5z"/>
             </svg>
@@ -696,12 +699,12 @@
         <div class="form-section">
             <div class="button-group">
                 <div class="button-group-left">
-                    <button class="btn btn-primary" onclick="salvarFormulario()">
+                     <button class="btn btn-primary" onclick="salvarFormulario()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                         </svg>
                         Salvar Formulário
-                    </button>
+                    </button><br>
                 </div>
                 <div class="button-group-right">
                     <button class="btn btn-success" onclick="exportarPDF()">
@@ -709,7 +712,7 @@
                             <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                         </svg>
                         Exportar PDF
-                    </button>
+                    </button><br>
                 </div>
             </div>
         </div>
@@ -806,7 +809,7 @@
                         <button type="button" class="btn btn-danger" style="padding:2px 10px;font-size:18px;background:none;color:#e74c3c;font-weight:bold;border:none;" onclick="confirmarRemoverItem('duvidas', ${idx})">X</button>
                     </div>
                 </div>
-                <textarea class=\"form-control\" rows=\"2\" placeholder=\"${descricao}\"></textarea>
+                <textarea class=\"form-control\" rows=\"2\" placeholder="${descricao}"></textarea>
             `;
             return div;
         }
